@@ -2,11 +2,12 @@ const router = require("express").Router();
 const toDosController = require("../../../controllers/toDosController");
 
 router.route("/")
-  .get(toDosController.getAllTodos)
+  .get(toDosController.findAllToDos)
   .post(toDosController.addToDo);
 
 router.route('/:id')
-  .get(toDosController.getToDoById)
-  .delete(toDosController.deleteToDoById);
+  .get(toDosController.findToDoById)
+  .delete(toDosController.deleteToDoById)
+  .patch(toDosController.updateToDoTextById);
 
 module.exports = router;

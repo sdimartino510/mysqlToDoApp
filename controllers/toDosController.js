@@ -2,7 +2,7 @@ const connection = require("../config/connection");
 const toDoQueries = require("../models/toDos/toDoQueries");
 
 module.exports = {
-  getAllTodos: async (req, res) => {
+  findAllToDos: async (req, res) => {
     try {
       const [todos] = await connection.query(toDoQueries.findAllToDos);
       res.status(200).json(todos);
@@ -26,7 +26,7 @@ module.exports = {
       res.status(403).json({ e });
     }
   },
-  getToDoById: async (req, res) => {
+  findToDoById: async (req, res) => {
     const { id } = req.params;
     try {
       const [todos] = await connection.query(toDoQueries.findToDoById, id);
@@ -41,6 +41,17 @@ module.exports = {
       await connection.query(toDoQueries.deleteToDoById, id);
       const [todos] = await connection.query(toDoQueries.findAllToDos);
       res.json(todos);
+    } catch (e) {
+      res.status(403).json({ e });
+    }
+  },
+  updateToDoTextById: async (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    try {
+      await connection.query(toDoQueries.updateToDoTextById, [text, id]);
+      const [todos] = await connection.query(toDoQueries.findToDoById, id);
+      res.json(todos[0]);
     } catch (e) {
       res.status(403).json({ e });
     }
