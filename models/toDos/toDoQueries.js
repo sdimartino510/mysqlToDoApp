@@ -8,6 +8,7 @@ const addToDo = 'INSERT INTO todos SET ?;';
 const deleteToDoById = 'DELETE FROM todos WHERE id = ?;';
 
 const updateToDoTextById = 'UPDATE todos SET text = ? WHERE id = ?;';
+const updateToDoCompleteById = 'UPDATE todos SET completed = ? WHERE id = ?;';
 
 module.exports = {
   findAllToDos,
@@ -17,4 +18,5 @@ module.exports = {
   addToDo,
   deleteToDoById,
   updateToDoTextById,
+  updateToDoCompleteById,
 }

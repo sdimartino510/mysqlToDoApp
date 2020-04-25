@@ -56,4 +56,30 @@ module.exports = {
       res.status(403).json({ e });
     }
   },
+  findAllCompleted: async (req, res) => {
+    try {
+      const [todos] = await connection.query(toDoQueries.findAllCompleted);
+      res.status(200).json(todos);
+    } catch (e) {
+      res.status(403).json({ e });
+    }
+  },
+  findAllIncomplete: async (req, res) => {
+    try {
+      const [todos] = await connection.query(toDoQueries.findAllIncomplete);
+      res.status(200).json(todos);
+    } catch (e) {
+      res.status(403).json({ e });
+    }
+  },
+  updateToDoCompleteById: async (req, res) => {
+    const { id, completed } = req.params;
+    try {
+      await connection.query(toDoQueries.updateToDoCompleteById, [completed, id]);
+      const [todos] = await connection.query(toDoQueries.findToDoById, id);
+      res.json(todos[0]);
+    } catch (e) {
+      res.status(403).json({ e });
+    }
+  },
 };
