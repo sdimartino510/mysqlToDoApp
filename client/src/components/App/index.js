@@ -1,6 +1,6 @@
 import React from 'react';
-import Counter from './Counter';
-import TodoForm from './TodoForm';
+import Counter from '../../containers/Counter';
+import TodoForm from '../../containers/TodoForm';
 
 const App = () => (
   <>
