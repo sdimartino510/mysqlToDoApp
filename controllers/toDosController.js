@@ -76,8 +76,8 @@ module.exports = {
     const { id, completed } = req.params;
     try {
       await connection.query(toDoQueries.updateToDoCompleteById, [completed, id]);
-      const [todos] = await connection.query(toDoQueries.findToDoById, id);
-      res.json(todos[0]);
+      const [todos] = await connection.query(toDoQueries.findAllToDos);
+      res.json(todos);
     } catch (e) {
       res.status(403).json({ e });
     }
