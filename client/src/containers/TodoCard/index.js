@@ -7,7 +7,8 @@ class TodoCard extends Component {
       text: '',
       completed: '',
       id: ''
-    }
+    },
+    inputUpdate: ''
   }
 
   async componentDidMount() {
@@ -19,13 +20,33 @@ class TodoCard extends Component {
     }
   }
 
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value })
+  }
+
+  handleSubmit = async event => {
+    try {
+      const { data } = await axios.patch(`/api/todos/${ this.props.match.params.todoId }/updatetext`, { text: this.state.inputUpdate });
+      this.setState({ todo: data });
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <p>To Do: { this.state.todo.text }</p>
         <p>ID: { this.state.todo.id }</p>
         <p>Completed: { this.state.todo.completed }</p>
+        <input
+          name='inputUpdate'
+          value={ this.state.inputUpdate }
+          onChange={ this.handleInputChange }
+        />
+        <button onClick={ (e) => this.handleSubmit(e) }>Update Todo Item</button>
         <button onClick={ this.props.history.goBack }>Go Back</button>
       </div>
     );
