@@ -37,7 +37,6 @@ class TodoCard extends Component {
   handleDelete = async () => {
     try {
       await axios.delete(`/api/todos/${ this.props.match.params.todoId }`);
-      // this.setState({ todo: data });
       this.props.history.push('/todos');
     } catch(e) {
       console.log(e);
