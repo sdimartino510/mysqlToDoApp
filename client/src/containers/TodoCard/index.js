@@ -28,7 +28,17 @@ class TodoCard extends Component {
   handleSubmit = async event => {
     try {
       const { data } = await axios.patch(`/api/todos/${ this.props.match.params.todoId }/updatetext`, { text: this.state.inputUpdate });
-      this.setState({ todo: data });
+      this.setState({ todo: data, inputUpdate: '' });
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  handleDelete = async () => {
+    try {
+      await axios.delete(`/api/todos/${ this.props.match.params.todoId }`);
+      // this.setState({ todo: data });
+      this.props.history.push('/todos');
     } catch(e) {
       console.log(e);
     }
@@ -47,6 +57,7 @@ class TodoCard extends Component {
           onChange={ this.handleInputChange }
         />
         <button onClick={ (e) => this.handleSubmit(e) }>Update Todo Item</button>
+        <button onClick={ this.handleDelete }>Delete Todo Item</button>
         <button onClick={ this.props.history.goBack }>Go Back</button>
       </div>
     );
